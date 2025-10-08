@@ -4,20 +4,28 @@ window.onload = () => {
     let butDigits = document.querySelectorAll('.digits-wrap button');
     let butMathOperations = document.querySelectorAll('.math-wrap button')
     let number1 = 0;
-    let number2 = 0;
-    let clean = 0
-    let mathOperation = ''
+    let clean = 0;
+    let mathOperation = '';
+    let lenInput = 1;
 
     //обработка нажатий цифр
     butDigits.forEach(
         (el) => {
             el.addEventListener('click', (e) => {
+                console.log(lenInput + ' цифра = ' + e.target.innerText)
                 console.log(e.target.innerText)
                 if (clean === 1) {
                     inputfield.value = '';
                     clean = 0;
                 }
+                if (inputfield.value === ''){
+                    lenInput = 1
+                }
+                if (lenInput === 1 && e.target.innerText === '0') {
+                    return;
+                }
                 inputfield.value = inputfield.value + e.target.innerText
+                lenInput = lenInput + 1
             })
         }
     )
@@ -31,6 +39,7 @@ window.onload = () => {
                     clean = 1;
                     mathOperation = e.target.innerText
                     console.log(e.target.innerText)
+
                 }
             })
         }
@@ -41,6 +50,7 @@ window.onload = () => {
             console.log(mathOperation);
             console.log(inputfield.value);
 
+            let num2 = inputfield.value;
 
             if (mathOperation === '+') {
                 inputfield.value = +number1 + +inputfield.value
@@ -53,11 +63,16 @@ window.onload = () => {
             }
             if (mathOperation === '/') {
                 inputfield.value = +number1 / +inputfield.value
+
+                if (num2 === '0') {
+                    inputfield.value = 'Делить на 0 нельзя';
+                    console.log('Делать на 0 нельзя')
+                }
             }
         }
     )
 
 }
 //TODO
-// деление на 0
-// первый 0
+//первый 0
+//возможность вводить после =
